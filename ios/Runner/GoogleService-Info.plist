@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>323545294756-c2f83a7hq9op2gc68vpn1nrgrd274ubq.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.323545294756-c2f83a7hq9op2gc68vpn1nrgrd274ubq</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>323545294756-1kd9mo0lpauruc8tvvdsmqpq00ach42u.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyApK9RLOpJBUUeFmgkyUVJAA3d3zQe88G4</string>
+	<key>GCM_SENDER_ID</key>
+	<string>323545294756</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.twedacademy.hiEvery</string>
+	<key>PROJECT_ID</key>
+	<string>hievery</string>
+	<key>STORAGE_BUCKET</key>
+	<string>hievery.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:323545294756:ios:09492131933d89f2594331</string>
+	<key>DATABASE_URL</key>
+	<string>https://hievery-default-rtdb.firebaseio.com</string>
+</dict>
+</plist>
