@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 import 'login.dart';
+import 'model/user.dart';
 
 class Register extends StatefulWidget {
   @override
@@ -29,7 +31,12 @@ class _RegisterState extends State<Register> {
             _messageError = "";
           });
 
-          _registerUser();
+          User user = User();
+          user.name = name;
+          user.email = email;
+          user.password = password;
+
+          _registerUser( user );
 
         } else {
           setState(() {
@@ -48,7 +55,23 @@ class _RegisterState extends State<Register> {
     }
   }
 
-  _registerUser(){
+  _registerUser( User user ){
+
+    FirebaseAuth auth = FirebaseAuth.instance;
+
+    auth.createUserWithEmailAndPassword(
+        email: user.email,
+        password: user.password
+    ).then((firebaseUser){
+      setState(() {
+        _messageError = "Registering with success!";
+      });
+    }).catchError((error){
+      setState(() {
+        print("Error: " + error.toString());
+        _messageError = "Error in register, try again please!";
+      });
+    });
 
   }
 
@@ -150,22 +173,25 @@ class _RegisterState extends State<Register> {
                     ),
                   ),
                 ),
-                Center(
-                  child: GestureDetector(
-                    child: Text(
-                      "I have register, login now!",
-                      style: TextStyle(color: Colors.white, fontSize: 18.0),
-                    ),
-                    onTap: (){
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => Login()
-                          )
-                      );
-                    },
-                  ),
-                )
+               Padding(
+                 padding: EdgeInsets.only(top: 20.0),
+                 child: Center(
+                   child: GestureDetector(
+                     child: Text(
+                       "I have register, login now!",
+                       style: TextStyle(color: Colors.white, fontSize: 18.0),
+                     ),
+                     onTap: (){
+                       Navigator.push(
+                           context,
+                           MaterialPageRoute(
+                               builder: (context) => Login()
+                           )
+                       );
+                     },
+                   ),
+                 ),
+               )
               ],
             ),
           ),
