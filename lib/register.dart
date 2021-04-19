@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
+import 'home.dart';
 import 'login.dart';
 import 'model/user.dart';
 
@@ -63,9 +64,14 @@ class _RegisterState extends State<Register> {
         email: user.email,
         password: user.password
     ).then((firebaseUser){
-      setState(() {
-        _messageError = "Registering with success!";
-      });
+
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => Home()
+        )
+      );
+
     }).catchError((error){
       setState(() {
         print("Error: " + error.toString());
