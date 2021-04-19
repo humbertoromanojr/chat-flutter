@@ -16,19 +16,40 @@ class _RegisterState extends State<Register> {
 
   String _messageError = "";
 
-  validateFields(){
+  _validateFields(){
     // retrieves data from fields
     String name = _controllerName.text;
     String email = _controllerEmail.text;
     String password = _controllerPassword.text;
 
     if(name.isNotEmpty && name.length >= 6){
+      if(email.isNotEmpty && email.contains("@")){
+        if(password.isNotEmpty && password.length > 6){
+          setState(() {
+            _messageError = "";
+          });
 
+          _registerUser();
+
+        } else {
+          setState(() {
+            _messageError = "Fill in the PASSWORD field and have at least 7 characters";
+          });
+        }
+      } else {
+        setState(() {
+          _messageError = "Fill in the EMAIL field and must be valid";
+        });
+      }
     } else {
       setState(() {
-        _messageError = "Fill in the name field and have at least 6 characters";
+        _messageError = "Fill in the NAME field and have at least 6 characters";
       });
     }
+  }
+
+  _registerUser(){
+
   }
 
   @override
@@ -105,7 +126,7 @@ class _RegisterState extends State<Register> {
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsets.only(top: 6.0, bottom: 50.0),
+                  padding: EdgeInsets.only(top: 6.0, bottom: 10.0),
                   child: RaisedButton(
                     child: Text(
                       "Register",
@@ -117,14 +138,16 @@ class _RegisterState extends State<Register> {
                         borderRadius: BorderRadius.circular(32)
                     ),
                     onPressed: () {
-                      validateFields();
+                      _validateFields();
                     },
                   ),
                 ),
-                Text(
-                  _messageError,
-                  style: TextStyle(
-                    color: Colors.red, fontSize: 20.0
+                Center(
+                  child: Text(
+                    _messageError,
+                    style: TextStyle(
+                        color: Colors.red, fontSize: 20.0
+                    ),
                   ),
                 ),
                 Center(
