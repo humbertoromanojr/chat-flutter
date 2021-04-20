@@ -72,7 +72,7 @@ class _RegisterState extends State<Register> {
         .document(firebaseUser.uid)
         .setData( user.toMap() );
 
-      Navigator.pushReplacement(
+      Navigator.push(
         context,
         MaterialPageRoute(
             builder: (context) => Home()
@@ -195,7 +195,7 @@ class _RegisterState extends State<Register> {
                        style: TextStyle(color: Colors.white, fontSize: 18.0),
                      ),
                      onTap: (){
-                       Navigator.push(
+                       Navigator.pushReplacement(
                            context,
                            MaterialPageRoute(
                                builder: (context) => Login()

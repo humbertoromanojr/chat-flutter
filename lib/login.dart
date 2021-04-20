@@ -71,6 +71,7 @@ class _LoginState extends State<Login> {
   Future _verifyUserLogged() async {
 
     FirebaseAuth auth = FirebaseAuth.instance;
+    //auth.signOut();
 
     FirebaseUser userLogged = await auth.currentUser();
     if( userLogged != null ){
@@ -145,7 +146,7 @@ class _LoginState extends State<Login> {
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsets.only(top: 6.0, bottom: 50.0),
+                  padding: EdgeInsets.only(top: 6.0, bottom: 20.0),
                   child: RaisedButton(
                     child: Text(
                       "Login",
