@@ -1,5 +1,8 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
+import 'home.dart';
+import 'model/user.dart';
 import 'register.dart';
 
 class Login extends StatefulWidget {
@@ -8,6 +11,85 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
+
+  //controllers
+  TextEditingController _controllerEmail = TextEditingController();
+  TextEditingController _controllerPassword = TextEditingController();
+
+  String _messageError = "";
+
+  _validateFields(){
+    // retrieves data from fields
+    String email = _controllerEmail.text;
+    String password = _controllerPassword.text;
+
+    if(email.isNotEmpty && email.contains("@")){
+      if(password.isNotEmpty){
+        setState(() {
+          _messageError = "";
+        });
+
+        User user = User();
+        user.email = email;
+        user.password = password;
+
+        _loggedUser( user );
+
+      } else {
+        setState(() {
+          _messageError = "Fill in the PASSWORD";
+        });
+      }
+    } else {
+      setState(() {
+        _messageError = "Fill in the EMAIL field and must be valid";
+      });
+    }
+  }
+
+  _loggedUser( User user ) {
+
+    FirebaseAuth auth = FirebaseAuth.instance;
+
+    auth.signInWithEmailAndPassword(
+        email: user.email,
+        password: user.password
+    ).then((firebaseUser){
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => Home()
+          )
+      );
+    }).catchError((error){
+      print("Error: " + error.toString());
+      _messageError = "Error in authenticate, verify email and password, try again please!";
+    });
+
+  }
+
+  Future _verifyUserLogged() async {
+
+    FirebaseAuth auth = FirebaseAuth.instance;
+
+    FirebaseUser userLogged = await auth.currentUser();
+    if( userLogged != null ){
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => Home()
+          )
+      );
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+
+    _verifyUserLogged();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -32,6 +114,7 @@ class _LoginState extends State<Login> {
                   padding: EdgeInsets.only(bottom: 10.0),
                   child: TextField(
                     autofocus: true,
+                    controller: _controllerEmail,
                     keyboardType: TextInputType.emailAddress,
                     style: TextStyle(fontSize: 20.0),
                     decoration: InputDecoration(
@@ -47,6 +130,7 @@ class _LoginState extends State<Login> {
                 Padding(
                   padding: EdgeInsets.only(bottom: 10.0),
                   child: TextField(
+                    controller: _controllerPassword,
                     keyboardType: TextInputType.text,
                     obscureText: true,
                     style: TextStyle(fontSize: 20.0),
@@ -72,7 +156,20 @@ class _LoginState extends State<Login> {
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(32)
                     ),
-                    onPressed: () {},
+                    onPressed: () {
+                      _validateFields();
+                    },
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.only(bottom: 10.0),
+                  child: Center(
+                    child: Text(
+                      _messageError,
+                      style: TextStyle(
+                          color: Colors.red, fontSize: 20.0
+                      ),
+                    ),
                   ),
                 ),
                 Center(
