@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'home.dart';
 import 'login.dart';
@@ -64,8 +65,14 @@ class _RegisterState extends State<Register> {
         email: user.email,
         password: user.password
     ).then((firebaseUser){
+      // save user firestore
+      Firestore db = Firestore.instance;
 
-      Navigator.push(
+      db.collection("users")
+        .document(firebaseUser.uid)
+        .setData( user.toMap() );
+
+      Navigator.pushReplacement(
         context,
         MaterialPageRoute(
             builder: (context) => Home()
